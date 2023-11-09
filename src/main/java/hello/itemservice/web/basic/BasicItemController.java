@@ -71,10 +71,17 @@ public class BasicItemController {
     }
 
     // 객체인 경우 @ModelAttribute 생략해도 됨
-    @PostMapping("/add")
+//    @PostMapping("/add")
     public String addItemV4(Item item) {
         itemRepository.save(item);
         return "basic/item";
+    }
+
+    // 새로고침 시 중복 저장되는 것을 막기 위해 리다이렉트 처리
+    @PostMapping("/add")
+    public String addItemV5(Item item) {
+        itemRepository.save(item);
+        return "redirect:/basic/items/" + item.getId(); // url 인코딩이 안되는 방식
     }
 
     @GetMapping("/{itemId}/edit")
